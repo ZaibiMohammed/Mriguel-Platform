@@ -1,0 +1,13 @@
+namespace AlloVoisinClone.Application.Common.Exceptions
+{
+    /// <summary>
+    /// Exception thrown when access to a resource is forbidden
+    /// </summary>
+    public class ForbiddenAccessException : Exception
+    {
+        public ForbiddenAccessException()
+            : base("You do not have permission to access this resource.")
+        {
+        }
+    }
+}

@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+      - "5001:443"
+    depends_on:
+      - db
+      - minio
+      - mailhog
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Database=MriguelDb;User=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+      - ConnectionStrings__IdentityConnection=Server=db;Database=MriguelIdentityDb;User=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=True;
+      - AWS__S3__ServiceUrl=http://minio:9000
+      - AWS__S3__BucketName=mriguel-files
+      - AWS__S3__AccessKey=minio
+      - AWS__S3__SecretKey=minio123
+      - Email__SmtpServer=mailhog
+      - Email__Port=1025
+      - Email__Username=
+      - Email__Password=
+      - JwtSettings__Secret=YourSecretKeyForDevelopmentEnvironmentOnlyNotForProduction
+      - JwtSettings__Issuer=Mriguel
+      - JwtSettings__Audience=MriguelApi
+      - JwtSettings__ExpirationDays=7
+      - AllowedOrigins__0=http://localhost:3000
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ACCESS_KEY=minio
+      - MINIO_SECRET_KEY=minio123
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025" # SMTP server
+      - "8025:8025" # Web UI
+
+volumes:
+  sqlserver_data:
+  minio_data:
