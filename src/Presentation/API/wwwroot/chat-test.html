@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mriguel Chat Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { display: flex; gap: 20px; }
+        .chat-window { flex: 1; border: 1px solid #ccc; padding: 10px; border-radius: 5px; }
+        .messages { height: 300px; overflow-y: auto; margin-bottom: 10px; border: 1px solid #eee; padding: 10px; }
+        .message { margin-bottom: 10px; padding: 8px; border-radius: 5px; }
+        .sent { background-color: #e6f7ff; text-align: right; }
+        .received { background-color: #f2f2f2; }
+        input, button { padding: 8px; margin-right: 5px; }
+        input { width: 70%; }
+        .status { color: #666; font-style: italic; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Mriguel Chat Test</h1>
+    
+    <div>
+        <h2>Authentication</h2>
+        <div>
+            <input type="text" id="token" placeholder="Enter JWT token" style="width: 50%;" />
+            <button onclick="connectWithToken()">Connect</button>
+        </div>
+        <div class="status" id="connection-status">Disconnected</div>
+    </div>
+    
+    <div style="margin-top: 20px;">
+        <h2>Join Rental Chat</h2>
+        <div>
+            <input type="text" id="rental-id" placeholder="Enter Rental ID (GUID)" />
+            <button onclick="joinRentalChat()">Join Chat</button>
+            <button onclick="leaveRentalChat()">Leave Chat</button>
+        </div>
+    </div>
+    
+    <div class="container" style="margin-top: 20px;">
+        <div class="chat-window">
+            <h2>Chat</h2>
+            <div class="messages" id="messages"></div>
+            <div>
+                <input type="text" id="message" placeholder="Type a message..." onkeyup="handleTyping()" />
+                <button onclick="sendMessage()">Send</button>
+            </div>
+            <div class="status" id="typing-status"></div>
+        </div>
+    </div>
+    
+    <script>
+        let connection;
+        let currentRentalId;
+        let typingTimer;
+        
+        async function connectWithToken() {
+            const token = document.getElementById('token').value;
+            if (!token) {
+                alert('Please enter a JWT token');
+                return;
+            }
+            
+            try {
+                // Create the connection
+                connection = new signalR.HubConnectionBuilder()
+                    .withUrl('/chathub', { 
+                        accessTokenFactory: () => token 
+                    })
+                    .withAutomaticReconnect()
+                    .build();
+                
+                // Set up message handler
+                connection.on('ReceiveMessage', (message) => {
+                    const messagesDiv = document.getElementById('messages');
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = message.senderId === getUserIdFromToken(token) ? 'message sent' : 'message received';
+                    messageDiv.innerHTML = `
+                        <strong>${message.senderName}</strong><br>
+                        ${message.message}<br>
+                        <small>${new Date(message.timestamp).toLocaleTimeString()}</small>
+                    `;
+                    messagesDiv.appendChild(messageDiv);
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                });
+                
+                // Set up typing notification handler
+                connection.on('UserTyping', (data) => {
+                    document.getElementById('typing-status').innerText = 'Someone is typing...';
+                    clearTimeout(typingTimer);
+                    typingTimer = setTimeout(() => {
+                        document.getElementById('typing-status').innerText = '';
+                    }, 2000);
+                });
+                
+                // Start the connection
+                await connection.start();
+                document.getElementById('connection-status').innerText = 'Connected';
+            } catch (err) {
+                console.error(err);
+                document.getElementById('connection-status').innerText = `Connection failed: ${err.message}`;
+            }
+        }
+        
+        async function joinRentalChat() {
+            if (!connection || connection.state !== 'Connected') {
+                alert('Please connect first');
+                return;
+            }
+            
+            const rentalId = document.getElementById('rental-id').value;
+            if (!rentalId) {
+                alert('Please enter a rental ID');
+                return;
+            }
+            
+            try {
+                await connection.invoke('JoinRentalChat', rentalId);
+                currentRentalId = rentalId;
+                document.getElementById('messages').innerHTML = '';
+                document.getElementById('connection-status').innerText = `Connected and joined rental chat: ${rentalId}`;
+            } catch (err) {
+                console.error(err);
+                alert(`Failed to join chat: ${err.message}`);
+            }
+        }
+        
+        async function leaveRentalChat() {
+            if (!connection || connection.state !== 'Connected' || !currentRentalId) {
+                alert('Not in a chat room');
+                return;
+            }
+            
+            try {
+                await connection.invoke('LeaveRentalChat', currentRentalId);
+                document.getElementById('connection-status').innerText = 'Connected but not in any chat room';
+                currentRentalId = null;
+            } catch (err) {
+                console.error(err);
+                alert(`Failed to leave chat: ${err.message}`);
+            }
+        }
+        
+        async function sendMessage() {
+            if (!connection || connection.state !== 'Connected' || !currentRentalId) {
+                alert('Please connect and join a chat room first');
+                return;
+            }
+            
+            const messageInput = document.getElementById('message');
+            const message = messageInput.value;
+            if (!message) return;
+            
+            try {
+                await connection.invoke('SendMessage', currentRentalId, message);
+                messageInput.value = '';
+            } catch (err) {
+                console.error(err);
+                alert(`Failed to send message: ${err.message}`);
+            }
+        }
+        
+        function handleTyping() {
+            if (!connection || connection.state !== 'Connected' || !currentRentalId) return;
+            
+            // Throttle typing notifications
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(async () => {
+                try {
+                    await connection.invoke('NotifyTyping', currentRentalId);
+                } catch (err) {
+                    console.error('Failed to send typing notification:', err);
+                }
+            }, 500);
+        }
+        
+        function getUserIdFromToken(token) {
+            try {
+                // Extract payload from JWT
+                const payload = token.split('.')[1];
+                const decodedPayload = atob(payload);
+                const payloadObj = JSON.parse(decodedPayload);
+                // Return the nameid claim which should contain the user ID
+                return payloadObj.nameid || payloadObj.sub;
+            } catch (err) {
+                console.error('Failed to extract user ID from token:', err);
+                return null;
+            }
+        }
+    </script>
+</body>
+</html>

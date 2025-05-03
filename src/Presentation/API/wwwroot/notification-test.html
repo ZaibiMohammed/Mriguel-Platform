@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mriguel Notification Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .notification-panel { border: 1px solid #ccc; padding: 10px; border-radius: 5px; margin-top: 20px; }
+        .notifications { height: 300px; overflow-y: auto; margin-bottom: 10px; border: 1px solid #eee; padding: 10px; }
+        .notification { margin-bottom: 10px; padding: 10px; border-radius: 5px; background-color: #f9f9f9; border-left: 4px solid #4CAF50; }
+        .notification-title { font-weight: bold; margin-bottom: 5px; }
+        .notification-message { margin-bottom: 5px; }
+        .notification-time { font-size: 0.8em; color: #666; }
+        .notification-link { color: #0066cc; text-decoration: underline; cursor: pointer; }
+        input, button { padding: 8px; margin-right: 5px; }
+        input { width: 70%; }
+        .status { color: #666; font-style: italic; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mriguel Notification Test</h1>
+        
+        <div>
+            <h2>Authentication</h2>
+            <div>
+                <input type="text" id="token" placeholder="Enter JWT token" style="width: 70%;" />
+                <button onclick="connectWithToken()">Connect</button>
+            </div>
+            <div class="status" id="connection-status">Disconnected</div>
+        </div>
+        
+        <div class="notification-panel">
+            <h2>Notifications</h2>
+            <div class="notifications" id="notifications"></div>
+        </div>
+    </div>
+    
+    <script>
+        let connection;
+        
+        async function connectWithToken() {
+            const token = document.getElementById('token').value;
+            if (!token) {
+                alert('Please enter a JWT token');
+                return;
+            }
+            
+            try {
+                // Create the connection
+                connection = new signalR.HubConnectionBuilder()
+                    .withUrl('/notificationhub', { 
+                        accessTokenFactory: () => token 
+                    })
+                    .withAutomaticReconnect()
+                    .build();
+                
+                // Set up notification handler
+                connection.on('ReceiveNotification', (notification) => {
+                    const notificationsDiv = document.getElementById('notifications');
+                    const notificationDiv = document.createElement('div');
+                    notificationDiv.className = 'notification';
+                    
+                    let notificationContent = `
+                        <div class="notification-title">${notification.title}</div>
+                        <div class="notification-message">${notification.message}</div>
+                        <div class="notification-time">${new Date(notification.timestamp).toLocaleString()}</div>
+                    `;
+                    
+                    if (notification.actionLink) {
+                        notificationContent += `
+                            <div class="notification-link" onclick="openLink('${notification.actionLink}')">
+                                View Details
+                            </div>
+                        `;
+                    }
+                    
+                    notificationDiv.innerHTML = notificationContent;
+                    notificationsDiv.insertBefore(notificationDiv, notificationsDiv.firstChild);
+                });
+                
+                // Start the connection
+                await connection.start();
+                document.getElementById('connection-status').innerText = 'Connected and listening for notifications';
+            } catch (err) {
+                console.error(err);
+                document.getElementById('connection-status').innerText = `Connection failed: ${err.message}`;
+            }
+        }
+        
+        function openLink(link) {
+            // In a real app, you would navigate to the link
+            // For this test, we'll just show an alert
+            alert(`Would navigate to: ${link}`);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mock JWT Token Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #333; }
+        .card { border: 1px solid #ddd; border-radius: 5px; padding: 20px; margin-bottom: 20px; }
+        .token-display { 
+            background-color: #f5f5f5; 
+            padding: 15px; 
+            border-radius: 5px; 
+            word-break: break-all;
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+        button { 
+            background-color: #0066cc; 
+            color: white; 
+            padding: 10px 15px; 
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover { background-color: #0055aa; }
+        .note { background-color: #ffffd9; padding: 10px; border-left: 4px solid #ffcc00; margin: 15px 0; }
+        .success { color: green; margin-top: 10px; }
+        .user-form {
+            margin-bottom: 20px;
+        }
+        .user-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .user-form input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mock JWT Token Generator</h1>
+        
+        <div class="note">
+            <strong>Note:</strong> This tool generates mock JWT tokens for testing purposes only. These tokens are not cryptographically secure and should never be used in production.
+        </div>
+        
+        <div class="card">
+            <h2>User Information</h2>
+            <div class="user-form">
+                <label for="userId">User ID:</label>
+                <input type="text" id="userId" value="00000000-0000-0000-0000-000000000001">
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" value="test@example.com">
+                
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" value="Test">
+                
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" value="User">
+                
+                <label for="role">Role:</label>
+                <input type="text" id="role" value="User">
+                
+                <button onclick="generateToken()">Generate Token</button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Generated Token</h2>
+            <div class="token-display" id="token-display">Token will appear here...</div>
+            <button onclick="copyToken()">Copy Token</button>
+            <div class="success" id="copy-status"></div>
+        </div>
+        
+        <div class="card">
+            <h2>Testing Links</h2>
+            <p>Use the generated token with these test tools:</p>
+            <ul>
+                <li><a href="/chat-test.html">Chat Testing Tool</a></li>
+                <li><a href="/notification-test.html">Notification Testing Tool</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Function to base64 encode a string
+        function base64UrlEncode(str) {
+            return btoa(str)
+                .replace(/\+/g, '-')
+                .replace(/\//g, '_')
+                .replace(/=+$/, '');
+        }
+        
+        function generateToken() {
+            // Get user input
+            const userId = document.getElementById('userId').value;
+            const email = document.getElementById('email').value;
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const role = document.getElementById('role').value;
+            
+            // Create JWT payload
+            const payload = {
+                sub: userId,
+                nameid: userId,
+                unique_name: email,
+                email: email,
+                given_name: firstName,
+                family_name: lastName,
+                role: role,
+                nbf: Math.floor(Date.now() / 1000),
+                exp: Math.floor(Date.now() / 1000) + 3600, // Token expires in 1 hour
+                iat: Math.floor(Date.now() / 1000),
+                iss: "mriguel-api",
+                aud: "mriguel-client"
+            };
+            
+            // Create JWT header
+            const header = {
+                alg: "HS256",
+                typ: "JWT"
+            };
+            
+            // Generate token
+            const encodedHeader = base64UrlEncode(JSON.stringify(header));
+            const encodedPayload = base64UrlEncode(JSON.stringify(payload));
+            const signature = "MOCK_SIGNATURE"; // In a real JWT, this would be a cryptographic signature
+            const mockToken = `${encodedHeader}.${encodedPayload}.${signature}`;
+            
+            // Display the token
+            document.getElementById('token-display').textContent = mockToken;
+        }
+        
+        // Copy to clipboard function
+        function copyToken() {
+            const tokenText = document.getElementById('token-display').textContent;
+            if (tokenText === "Token will appear here...") {
+                document.getElementById('copy-status').textContent = 'Please generate a token first';
+                setTimeout(() => {
+                    document.getElementById('copy-status').textContent = '';
+                }, 2000);
+                return;
+            }
+            
+            navigator.clipboard.writeText(tokenText)
+                .then(() => {
+                    document.getElementById('copy-status').textContent = 'Token copied to clipboard!';
+                    setTimeout(() => {
+                        document.getElementById('copy-status').textContent = '';
+                    }, 2000);
+                })
+                .catch(err => {
+                    document.getElementById('copy-status').textContent = 'Failed to copy token: ' + err;
+                });
+        }
+        
+        // Generate a token on page load
+        window.onload = generateToken;
+    </script>
+</body>
+</html>

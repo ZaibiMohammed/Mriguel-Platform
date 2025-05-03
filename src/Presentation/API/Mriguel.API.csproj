@@ -6,12 +6,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
     <UserSecretsId>93c7e173-8e33-4156-9c14-0ce74a1a28fb</UserSecretsId>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Hangfire.Core" Version="1.8.8" />
     <PackageReference Include="Hangfire.NetCore" Version="1.8.8" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0-preview.2.24128.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0-preview.2.24128.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0-preview.2.24128.4">
       <PrivateAssets>all</PrivateAssets>
@@ -21,6 +24,7 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="8.1.1" />
   </ItemGroup>
 
   <ItemGroup>
