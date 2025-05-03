@@ -1,6 +1,6 @@
-using AlloVoisinClone.Domain.Common;
+using Mriguel.Domain.Common;
 
-namespace AlloVoisinClone.Application.Common.Interfaces
+namespace Mriguel.Application.Common.Interfaces
 {
     /// <summary>
     /// Interface for domain event service

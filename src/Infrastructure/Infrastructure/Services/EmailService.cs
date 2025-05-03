@@ -1,11 +1,11 @@
-using AlloVoisinClone.Application.Common.Interfaces;
+using Mriguel.Application.Common.Interfaces;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MimeKit.Text;
 
-namespace AlloVoisinClone.Infrastructure.Services
+namespace Mriguel.Infrastructure.Services
 {
     /// <summary>
     /// Service for sending emails

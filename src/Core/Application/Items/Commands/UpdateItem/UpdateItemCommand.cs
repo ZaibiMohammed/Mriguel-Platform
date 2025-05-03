@@ -1,11 +1,11 @@
-using AlloVoisinClone.Application.Common.Exceptions;
-using AlloVoisinClone.Application.Common.Interfaces;
-using AlloVoisinClone.Domain.Entities;
-using AlloVoisinClone.Domain.ValueObjects;
+using Mriguel.Application.Common.Exceptions;
+using Mriguel.Application.Common.Interfaces;
+using Mriguel.Domain.Entities;
+using Mriguel.Domain.ValueObjects;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlloVoisinClone.Application.Items.Commands.UpdateItem
+namespace Mriguel.Application.Items.Commands.UpdateItem
 {
     /// <summary>
     /// Command to update an item
@@ -21,6 +21,9 @@ namespace AlloVoisinClone.Application.Items.Commands.UpdateItem
         public double Latitude { get; init; }
         public double Longitude { get; init; }
         public string Address { get; init; } = string.Empty;
+        public string City { get; init; } = string.Empty;
+        public string PostalCode { get; init; } = string.Empty;
+        public string Country { get; init; } = string.Empty;
     }
     
     /// <summary>
@@ -57,13 +60,12 @@ namespace AlloVoisinClone.Application.Items.Commands.UpdateItem
             
             var dailyPrice = new Money(request.DailyPrice, request.Currency);
             
-            Money? securityDeposit = null;
-            if (request.SecurityDeposit.HasValue)
-            {
-                securityDeposit = new Money(request.SecurityDeposit.Value, request.Currency);
-            }
+            // Create a default Money object with zero amount if SecurityDeposit is null
+            var securityDeposit = request.SecurityDeposit.HasValue
+                ? new Money(request.SecurityDeposit.Value, request.Currency)
+                : new Money(0, request.Currency);
             
-            var location = new Location(request.Latitude, request.Longitude, request.Address);
+            var location = new Location(request.Address, request.City, request.PostalCode, request.Country, request.Latitude, request.Longitude);
             
             item.Update(request.Title, request.Description, dailyPrice, securityDeposit, location);
             

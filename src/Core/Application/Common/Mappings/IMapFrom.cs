@@ -1,6 +1,6 @@
 using AutoMapper;
 
-namespace AlloVoisinClone.Application.Common.Mappings
+namespace Mriguel.Application.Common.Mappings
 {
     /// <summary>
     /// Interface for types that can be mapped from a source type

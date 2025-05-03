@@ -1,4 +1,4 @@
-using Mriguel.Domain.Entities.Identity;
+using Mriguel.Identity.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,4 +1,4 @@
-namespace AlloVoisinClone.Application.Common.Exceptions
+namespace Mriguel.Application.Common.Exceptions
 {
     /// <summary>
     /// Exception thrown when a requested entity is not found

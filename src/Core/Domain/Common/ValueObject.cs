@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AlloVoisinClone.Domain.Common
+namespace Mriguel.Domain.Common
 {
     /// <summary>
     /// Base class for all value objects

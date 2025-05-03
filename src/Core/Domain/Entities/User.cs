@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using AlloVoisinClone.Domain.Common;
-using AlloVoisinClone.Domain.Entities.Identity;
-using AlloVoisinClone.Domain.Enums;
-using AlloVoisinClone.Domain.Events;
-using AlloVoisinClone.Domain.ValueObjects;
+using Mriguel.Domain.Common;
+using Mriguel.Domain.Entities.Identity;
+using Mriguel.Domain.Enums;
+using Mriguel.Domain.Events;
 
-namespace AlloVoisinClone.Domain.Entities
+namespace Mriguel.Domain.Entities
 {
     /// <summary>
     /// Represents a user in the system

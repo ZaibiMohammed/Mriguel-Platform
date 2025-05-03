@@ -1,10 +1,10 @@
-using AlloVoisinClone.Domain.Entities.Identity;
-using AlloVoisinClone.Infrastructure.Identity;
+using Mriguel.Identity.Models;
+using Mriguel.Infrastructure.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AlloVoisinClone.API.Controllers.Auth
+namespace Mriguel.API.Controllers.Auth
 {
     /// <summary>
     /// Controller for authentication

@@ -1,6 +1,6 @@
 using System;
 
-namespace AlloVoisinClone.Domain.Exceptions
+namespace Mriguel.Domain.Exceptions
 {
     /// <summary>
     /// Base exception for all domain exceptions

@@ -1,11 +1,11 @@
-using AlloVoisinClone.Application.Common.Exceptions;
-using AlloVoisinClone.Application.Common.Interfaces;
-using AlloVoisinClone.Domain.Entities;
+using Mriguel.Application.Common.Exceptions;
+using Mriguel.Application.Common.Interfaces;
+using Mriguel.Domain.Entities;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlloVoisinClone.Application.Rentals.Queries.GetRentalById
+namespace Mriguel.Application.Rentals.Queries.GetRentalById
 {
     /// <summary>
     /// Query to get a rental by ID

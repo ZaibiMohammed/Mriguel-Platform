@@ -1,7 +1,7 @@
 using System.Reflection;
 using AutoMapper;
 
-namespace AlloVoisinClone.Application.Common.Mappings
+namespace Mriguel.Application.Common.Mappings
 {
     /// <summary>
     /// AutoMapper profile for application mappings

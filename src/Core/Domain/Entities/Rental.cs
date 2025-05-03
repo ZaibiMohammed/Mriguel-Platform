@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AlloVoisinClone.Domain.Common;
-using AlloVoisinClone.Domain.Enums;
-using AlloVoisinClone.Domain.Events;
-using AlloVoisinClone.Domain.Exceptions;
-using AlloVoisinClone.Domain.ValueObjects;
+using Mriguel.Domain.Common;
+using Mriguel.Domain.Enums;
+using Mriguel.Domain.Events;
+using Mriguel.Domain.Exceptions;
+using Mriguel.Domain.ValueObjects;
 
-namespace AlloVoisinClone.Domain.Entities
+namespace Mriguel.Domain.Entities
 {
     /// <summary>
     /// Represents a rental transaction between a renter and an item owner
@@ -48,7 +48,7 @@ namespace AlloVoisinClone.Domain.Entities
             
             if (!string.IsNullOrEmpty(message))
             {
-                _messages.Add(new RentalMessage(this, renter, message));
+                _messages.Add(new RentalMessage(message, renter, this));
             }
             
             AddDomainEvent(new RentalCreatedEvent(this));
@@ -150,10 +150,10 @@ namespace AlloVoisinClone.Domain.Entities
             if (sender.Id != RenterId && sender.Id != OwnerId)
                 throw new DomainException("Only the renter or owner can add messages to a rental");
                 
-            var message = new RentalMessage(this, sender, content);
+            var message = new RentalMessage(content, sender, this);
             _messages.Add(message);
             
-            AddDomainEvent(new RentalMessageAddedEvent(this, message));
+            AddDomainEvent(new RentalMessageAddedEvent(message, this));
         }
         
         public void AddReview(User reviewer, float rating, string content)
@@ -172,7 +172,7 @@ namespace AlloVoisinClone.Domain.Entities
                 throw new DomainException("User has already reviewed this rental");
                 
             // Create the review
-            var review = new Review(this, reviewer, reviewer.Id == RenterId ? Owner : Renter, rating, content);
+            var review = new Review(content, (int)rating, reviewer, this);
             _reviews.Add(review);
             
             // Update the reviewee's rating
@@ -186,7 +186,7 @@ namespace AlloVoisinClone.Domain.Entities
                 Renter.AddRating(rating);
             }
             
-            AddDomainEvent(new RentalReviewAddedEvent(this, review));
+            AddDomainEvent(new RentalReviewAddedEvent(review, this));
         }
         
         public int GetRentalDays()

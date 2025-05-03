@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace AlloVoisinClone.Application.Common.Behaviors
+namespace Mriguel.Application.Common.Behaviors
 {
     /// <summary>
     /// Pipeline behavior for logging unhandled exceptions

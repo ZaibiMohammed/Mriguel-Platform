@@ -1,6 +1,6 @@
 using System;
 
-namespace AlloVoisinClone.Domain.Common
+namespace Mriguel.Domain.Common
 {
     /// <summary>
     /// Base class for all auditable entities

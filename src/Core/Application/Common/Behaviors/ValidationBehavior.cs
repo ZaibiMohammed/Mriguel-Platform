@@ -1,8 +1,8 @@
 using FluentValidation;
 using MediatR;
-using ValidationException = AlloVoisinClone.Application.Common.Exceptions.ValidationException;
+using ValidationException = Mriguel.Application.Common.Exceptions.ValidationException;
 
-namespace AlloVoisinClone.Application.Common.Behaviors
+namespace Mriguel.Application.Common.Behaviors
 {
     /// <summary>
     /// Pipeline behavior for validating commands and queries

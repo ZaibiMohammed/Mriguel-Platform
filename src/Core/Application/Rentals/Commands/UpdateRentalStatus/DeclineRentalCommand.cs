@@ -1,10 +1,10 @@
-using AlloVoisinClone.Application.Common.Exceptions;
-using AlloVoisinClone.Application.Common.Interfaces;
-using AlloVoisinClone.Domain.Entities;
+using Mriguel.Application.Common.Exceptions;
+using Mriguel.Application.Common.Interfaces;
+using Mriguel.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlloVoisinClone.Application.Rentals.Commands.UpdateRentalStatus
+namespace Mriguel.Application.Rentals.Commands.UpdateRentalStatus
 {
     /// <summary>
     /// Command to decline a rental

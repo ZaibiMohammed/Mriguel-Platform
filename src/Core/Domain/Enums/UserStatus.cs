@@ -1,4 +1,4 @@
-namespace AlloVoisinClone.Domain.Enums
+namespace Mriguel.Domain.Enums
 {
     /// <summary>
     /// Represents the status of a user

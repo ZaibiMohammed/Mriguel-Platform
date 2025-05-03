@@ -1,9 +1,9 @@
-using AlloVoisinClone.Application.Common.Interfaces;
-using AlloVoisinClone.Domain.Common;
+using Mriguel.Application.Common.Interfaces;
+using Mriguel.Domain.Common;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace AlloVoisinClone.Infrastructure.Services
+namespace Mriguel.Infrastructure.Services
 {
     /// <summary>
     /// Service for publishing domain events

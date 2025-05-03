@@ -3,6 +3,7 @@ using Mriguel.Application.Items.Commands.PublishItem;
 using Mriguel.Application.Items.Commands.UpdateItem;
 using Mriguel.Application.Items.Queries.GetItemById;
 using Mriguel.Application.Items.Queries.GetItems;
+using Mriguel.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

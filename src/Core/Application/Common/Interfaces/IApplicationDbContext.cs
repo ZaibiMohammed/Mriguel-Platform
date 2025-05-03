@@ -1,7 +1,7 @@
-using AlloVoisinClone.Domain.Entities;
+using Mriguel.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlloVoisinClone.Application.Common.Interfaces
+namespace Mriguel.Application.Common.Interfaces
 {
     /// <summary>
     /// Interface for the application database context

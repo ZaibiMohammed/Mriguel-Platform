@@ -1,9 +1,9 @@
 using Amazon.S3;
 using Amazon.S3.Model;
-using AlloVoisinClone.Application.Common.Interfaces;
+using Mriguel.Application.Common.Interfaces;
 using Microsoft.Extensions.Configuration;
 
-namespace AlloVoisinClone.Infrastructure.Services
+namespace Mriguel.Infrastructure.Services
 {
     /// <summary>
     /// Service for storing files on Amazon S3

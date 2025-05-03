@@ -1,4 +1,4 @@
-namespace AlloVoisinClone.API.Controllers.Auth
+namespace Mriguel.API.Controllers.Auth
 {
     /// <summary>
     /// Login request model

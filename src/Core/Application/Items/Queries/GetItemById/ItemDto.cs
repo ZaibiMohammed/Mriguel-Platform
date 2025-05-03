@@ -1,9 +1,9 @@
-using AlloVoisinClone.Application.Common.Mappings;
-using AlloVoisinClone.Domain.Entities;
-using AlloVoisinClone.Domain.Enums;
+using Mriguel.Application.Common.Mappings;
+using Mriguel.Domain.Entities;
+using Mriguel.Domain.Enums;
 using AutoMapper;
 
-namespace AlloVoisinClone.Application.Items.Queries.GetItemById
+namespace Mriguel.Application.Items.Queries.GetItemById
 {
     /// <summary>
     /// Data transfer object for an item

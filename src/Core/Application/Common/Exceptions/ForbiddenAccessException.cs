@@ -1,4 +1,4 @@
-namespace AlloVoisinClone.Application.Common.Exceptions
+namespace Mriguel.Application.Common.Exceptions
 {
     /// <summary>
     /// Exception thrown when access to a resource is forbidden

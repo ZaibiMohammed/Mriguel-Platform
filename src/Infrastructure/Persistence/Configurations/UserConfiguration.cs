@@ -1,10 +1,10 @@
-using AlloVoisinClone.Domain.Entities;
-using AlloVoisinClone.Domain.Enums;
-using AlloVoisinClone.Domain.ValueObjects;
+using Mriguel.Domain.Entities;
+using Mriguel.Domain.Enums;
+using Mriguel.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AlloVoisinClone.Infrastructure.Persistence.Configurations
+namespace Mriguel.Infrastructure.Persistence.Configurations
 {
     /// <summary>
     /// Configuration for User entity
@@ -66,8 +66,8 @@ namespace AlloVoisinClone.Infrastructure.Persistence.Configurations
                 .OnDelete(DeleteBehavior.Restrict);
                 
             builder.HasMany(u => u.ReviewsReceived)
-                .WithOne(r => r.Reviewee)
-                .HasForeignKey(r => r.RevieweeId)
+                .WithOne(r => r.ReviewedUser)
+                .HasForeignKey(r => r.ReviewedUserId)
                 .OnDelete(DeleteBehavior.Restrict);
                 
             builder.HasMany(u => u.Addresses)

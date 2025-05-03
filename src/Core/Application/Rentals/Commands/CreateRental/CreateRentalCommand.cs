@@ -1,10 +1,10 @@
-using AlloVoisinClone.Application.Common.Exceptions;
-using AlloVoisinClone.Application.Common.Interfaces;
-using AlloVoisinClone.Domain.Entities;
+using Mriguel.Application.Common.Exceptions;
+using Mriguel.Application.Common.Interfaces;
+using Mriguel.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlloVoisinClone.Application.Rentals.Commands.CreateRental
+namespace Mriguel.Application.Rentals.Commands.CreateRental
 {
     /// <summary>
     /// Command to create a new rental

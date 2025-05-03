@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace AlloVoisinClone.Application.Common.Models
+namespace Mriguel.Application.Common.Models
 {
     /// <summary>
     /// Represents a paginated list of items

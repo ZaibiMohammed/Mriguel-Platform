@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AlloVoisinClone.Domain.Common
+namespace Mriguel.Domain.Common
 {
     /// <summary>
     /// Base class for all entities

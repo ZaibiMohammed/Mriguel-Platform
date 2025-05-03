@@ -1,9 +1,9 @@
-using AlloVoisinClone.Application.Common.Interfaces;
-using AlloVoisinClone.Domain.Entities;
-using AlloVoisinClone.Domain.Entities.Identity;
+using Mriguel.Application.Common.Interfaces;
+using Mriguel.Domain.Entities;
+using Mriguel.Domain.Entities.Identity;
 using MediatR;
 
-namespace AlloVoisinClone.Application.Users.Commands.CreateUser
+namespace Mriguel.Application.Users.Commands.CreateUser
 {
     /// <summary>
     /// Command to create a new user
@@ -51,7 +51,8 @@ namespace AlloVoisinClone.Application.Users.Commands.CreateUser
                 request.LastName,
                 new ApplicationUser { Id = userId });
                 
-            user.PhoneNumber = request.PhoneNumber;
+            // Update profile with phone number
+            user.UpdateProfile(request.FirstName, request.LastName, null, request.PhoneNumber, null, null);
             
             await _context.Users.AddAsync(user, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);

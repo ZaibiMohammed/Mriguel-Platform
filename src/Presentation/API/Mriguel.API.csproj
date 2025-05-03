@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hangfire.Core" Version="1.8.8" />
+    <PackageReference Include="Hangfire.NetCore" Version="1.8.8" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0-preview.2.24128.4" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0-preview.2.24128.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0-preview.2.24128.4">
@@ -26,6 +28,7 @@
     <ProjectReference Include="..\..\Infrastructure\Identity\Mriguel.Identity.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Infrastructure\Mriguel.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Persistence\Mriguel.Persistence.csproj" />
+    <ProjectReference Include="..\SignalR\Mriguel.SignalR.csproj" />
   </ItemGroup>
 
 </Project>

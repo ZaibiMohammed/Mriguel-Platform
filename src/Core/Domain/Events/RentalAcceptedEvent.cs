@@ -1,7 +1,7 @@
-using AlloVoisinClone.Domain.Common;
-using AlloVoisinClone.Domain.Entities;
+using Mriguel.Domain.Common;
+using Mriguel.Domain.Entities;
 
-namespace AlloVoisinClone.Domain.Events
+namespace Mriguel.Domain.Events
 {
     /// <summary>
     /// Event triggered when a rental is accepted

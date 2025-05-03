@@ -1,4 +1,4 @@
-namespace AlloVoisinClone.Application.Common.Models
+namespace Mriguel.Application.Common.Models
 {
     /// <summary>
     /// Represents a result of an operation

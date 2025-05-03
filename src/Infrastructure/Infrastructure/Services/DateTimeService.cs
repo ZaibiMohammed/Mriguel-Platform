@@ -1,6 +1,6 @@
-using AlloVoisinClone.Application.Common.Interfaces;
+using Mriguel.Application.Common.Interfaces;
 
-namespace AlloVoisinClone.Infrastructure.Services
+namespace Mriguel.Infrastructure.Services
 {
     /// <summary>
     /// Service for datetime operations

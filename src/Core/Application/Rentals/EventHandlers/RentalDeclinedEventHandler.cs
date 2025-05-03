@@ -1,9 +1,9 @@
-using AlloVoisinClone.Application.Common.Interfaces;
-using AlloVoisinClone.Domain.Events;
+using Mriguel.Application.Common.Interfaces;
+using Mriguel.Domain.Events;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace AlloVoisinClone.Application.Rentals.EventHandlers
+namespace Mriguel.Application.Rentals.EventHandlers
 {
     /// <summary>
     /// Handler for the RentalDeclinedEvent

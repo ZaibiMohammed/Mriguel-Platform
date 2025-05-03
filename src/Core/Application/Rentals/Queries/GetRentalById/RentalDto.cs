@@ -1,9 +1,9 @@
-using AlloVoisinClone.Application.Common.Mappings;
-using AlloVoisinClone.Domain.Entities;
-using AlloVoisinClone.Domain.Enums;
+using Mriguel.Application.Common.Mappings;
+using Mriguel.Domain.Entities;
+using Mriguel.Domain.Enums;
 using AutoMapper;
 
-namespace AlloVoisinClone.Application.Rentals.Queries.GetRentalById
+namespace Mriguel.Application.Rentals.Queries.GetRentalById
 {
     /// <summary>
     /// Data transfer object for a rental
@@ -50,12 +50,23 @@ namespace AlloVoisinClone.Application.Rentals.Queries.GetRentalById
         public string CoverImageUrl { get; set; } = string.Empty;
         public List<string> ImageUrls { get; set; } = new();
         
+        private string GetCoverImageUrl(Item item)
+        {
+            var coverImage = item.Images.FirstOrDefault(i => i.IsCoverImage);
+            if (coverImage != null && coverImage.Url != null)
+                return coverImage.Url;
+                
+            var firstImage = item.Images.FirstOrDefault();
+            if (firstImage != null && firstImage.Url != null)
+                return firstImage.Url;
+                    
+            return string.Empty;
+        }
+        
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Item, RentalItemDto>()
-                .ForMember(d => d.CoverImageUrl, opt => opt.MapFrom(s => 
-                    s.Images.FirstOrDefault(i => i.IsCoverImage)?.Url ?? 
-                    s.Images.FirstOrDefault()?.Url ?? string.Empty))
+                .ForMember(d => d.CoverImageUrl, opt => opt.MapFrom<string>((src, dest, destMember, context) => GetCoverImageUrl(src)))
                 .ForMember(d => d.ImageUrls, opt => opt.MapFrom(s => 
                     s.Images.Select(i => i.Url).ToList()));
         }

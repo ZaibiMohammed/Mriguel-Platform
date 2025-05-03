@@ -1,4 +1,4 @@
-namespace AlloVoisinClone.Domain.Common
+namespace Mriguel.Domain.Common
 {
     /// <summary>
     /// Marker interface for aggregate roots

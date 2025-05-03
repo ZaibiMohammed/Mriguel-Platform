@@ -1,7 +1,7 @@
 using System;
 using MediatR;
 
-namespace AlloVoisinClone.Domain.Common
+namespace Mriguel.Domain.Common
 {
     /// <summary>
     /// Base class for all domain events
@@ -17,6 +17,11 @@ namespace AlloVoisinClone.Domain.Common
         /// A unique identifier for this event
         /// </summary>
         public Guid Id { get; }
+        
+        /// <summary>
+        /// Indicates whether this event has been published
+        /// </summary>
+        public bool IsPublished { get; set; }
         
         protected DomainEvent()
         {

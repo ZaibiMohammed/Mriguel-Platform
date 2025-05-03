@@ -1,10 +1,10 @@
-using AlloVoisinClone.Application.Rentals.Commands.CreateRental;
-using AlloVoisinClone.Application.Rentals.Commands.UpdateRentalStatus;
-using AlloVoisinClone.Application.Rentals.Queries.GetRentalById;
+using Mriguel.Application.Rentals.Commands.CreateRental;
+using Mriguel.Application.Rentals.Commands.UpdateRentalStatus;
+using Mriguel.Application.Rentals.Queries.GetRentalById;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AlloVoisinClone.API.Controllers
+namespace Mriguel.API.Controllers
 {
     /// <summary>
     /// Controller for rental management

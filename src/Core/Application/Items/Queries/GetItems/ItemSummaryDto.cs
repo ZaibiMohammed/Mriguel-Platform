@@ -1,9 +1,9 @@
-using AlloVoisinClone.Application.Common.Mappings;
-using AlloVoisinClone.Domain.Entities;
-using AlloVoisinClone.Domain.Enums;
+using Mriguel.Application.Common.Mappings;
+using Mriguel.Domain.Entities;
+using Mriguel.Domain.Enums;
 using AutoMapper;
 
-namespace AlloVoisinClone.Application.Items.Queries.GetItems
+namespace Mriguel.Application.Items.Queries.GetItems
 {
     /// <summary>
     /// Data transfer object for an item summary
@@ -22,12 +22,23 @@ namespace AlloVoisinClone.Application.Items.Queries.GetItems
         public List<string> Categories { get; set; } = new();
         public DateTime Created { get; set; }
         
+        private string GetCoverImageUrl(Item item)
+        {
+            var coverImage = item.Images.FirstOrDefault(i => i.IsCoverImage);
+            if (coverImage != null && coverImage.Url != null)
+                return coverImage.Url;
+                
+            var firstImage = item.Images.FirstOrDefault();
+            if (firstImage != null && firstImage.Url != null)
+                return firstImage.Url;
+                    
+            return string.Empty;
+        }
+        
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Item, ItemSummaryDto>()
-                .ForMember(d => d.CoverImageUrl, opt => opt.MapFrom(s => 
-                    s.Images.FirstOrDefault(i => i.IsCoverImage)?.Url ?? 
-                    s.Images.FirstOrDefault()?.Url ?? string.Empty))
+                .ForMember(d => d.CoverImageUrl, opt => opt.MapFrom<string>((src, dest, destMember, context) => GetCoverImageUrl(src)))
                 .ForMember(d => d.OwnerName, opt => opt.MapFrom(s => $"{s.Owner.FirstName} {s.Owner.LastName}"))
                 .ForMember(d => d.OwnerProfilePictureUrl, opt => opt.MapFrom(s => s.Owner.ProfilePictureUrl))
                 .ForMember(d => d.Categories, opt => opt.MapFrom(s => 

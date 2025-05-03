@@ -1,4 +1,4 @@
-namespace AlloVoisinClone.Application.Common.Interfaces
+namespace Mriguel.Application.Common.Interfaces
 {
     /// <summary>
     /// Interface for file storage service

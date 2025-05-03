@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AlloVoisinClone.Domain.Common;
-using AlloVoisinClone.Domain.Enums;
-using AlloVoisinClone.Domain.Events;
-using AlloVoisinClone.Domain.Exceptions;
-using AlloVoisinClone.Domain.ValueObjects;
+using Mriguel.Domain.Common;
+using Mriguel.Domain.Enums;
+using Mriguel.Domain.Events;
+using Mriguel.Domain.Exceptions;
+using Mriguel.Domain.ValueObjects;
 
-namespace AlloVoisinClone.Domain.Entities
+namespace Mriguel.Domain.Entities
 {
     /// <summary>
     /// Represents an item that can be rented

@@ -1,9 +1,9 @@
-using AlloVoisinClone.Application.Users.Commands.CreateUser;
-using AlloVoisinClone.Application.Users.Queries.GetUserById;
+using Mriguel.Application.Users.Commands.CreateUser;
+using Mriguel.Application.Users.Queries.GetUserById;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AlloVoisinClone.API.Controllers
+namespace Mriguel.API.Controllers
 {
     /// <summary>
     /// Controller for user management

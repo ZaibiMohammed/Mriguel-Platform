@@ -1,6 +1,6 @@
 using Mriguel.Application.Common.Interfaces;
 using Mriguel.Application.Common.Models;
-using Mriguel.Domain.Entities.Identity;
+using Mriguel.Identity.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

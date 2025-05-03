@@ -1,9 +1,9 @@
-using AlloVoisinClone.Application.Common.Interfaces;
-using AlloVoisinClone.Domain.Entities;
-using AlloVoisinClone.Domain.ValueObjects;
+using Mriguel.Application.Common.Interfaces;
+using Mriguel.Domain.Entities;
+using Mriguel.Domain.ValueObjects;
 using MediatR;
 
-namespace AlloVoisinClone.Application.Items.Commands.CreateItem
+namespace Mriguel.Application.Items.Commands.CreateItem
 {
     /// <summary>
     /// Command to create a new item
@@ -18,6 +18,9 @@ namespace AlloVoisinClone.Application.Items.Commands.CreateItem
         public double Latitude { get; init; }
         public double Longitude { get; init; }
         public string Address { get; init; } = string.Empty;
+        public string City { get; init; } = string.Empty;
+        public string PostalCode { get; init; } = string.Empty;
+        public string Country { get; init; } = string.Empty;
     }
     
     /// <summary>
@@ -45,19 +48,15 @@ namespace AlloVoisinClone.Application.Items.Commands.CreateItem
             }
             
             var dailyPrice = new Money(request.DailyPrice, request.Currency);
-            Money? securityDeposit = null;
             
-            if (request.SecurityDeposit.HasValue)
-            {
-                securityDeposit = new Money(request.SecurityDeposit.Value, request.Currency);
-            }
-            
-            var location = new Location(request.Latitude, request.Longitude, request.Address);
-            
+            // Create the item first
+            var location = new Location(request.Address, request.City, request.PostalCode, request.Country, request.Latitude, request.Longitude);
             var item = new Item(request.Title, request.Description, dailyPrice, user, location);
             
-            if (securityDeposit != null)
+            // If security deposit is provided, update the item with it
+            if (request.SecurityDeposit.HasValue)
             {
+                var securityDeposit = new Money(request.SecurityDeposit.Value, request.Currency);
                 item.Update(request.Title, request.Description, dailyPrice, securityDeposit, location);
             }
             

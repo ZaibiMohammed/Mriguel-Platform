@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using AlloVoisinClone.Domain.Common;
-using AlloVoisinClone.Domain.Exceptions;
+using Mriguel.Domain.Common;
+using Mriguel.Domain.Exceptions;
 
-namespace AlloVoisinClone.Domain.ValueObjects
+namespace Mriguel.Domain.ValueObjects
 {
     /// <summary>
     /// Represents a geographical location with address and coordinates

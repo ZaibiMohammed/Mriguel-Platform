@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace Mriguel.Domain.Entities.Identity
+namespace Mriguel.Identity.Models
 {
     /// <summary>
     /// Identity user for the application

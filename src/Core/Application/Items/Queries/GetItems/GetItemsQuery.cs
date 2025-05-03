@@ -1,12 +1,12 @@
-using AlloVoisinClone.Application.Common.Interfaces;
-using AlloVoisinClone.Application.Common.Models;
-using AlloVoisinClone.Domain.Enums;
+using Mriguel.Application.Common.Interfaces;
+using Mriguel.Application.Common.Models;
+using Mriguel.Domain.Enums;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlloVoisinClone.Application.Items.Queries.GetItems
+namespace Mriguel.Application.Items.Queries.GetItems
 {
     /// <summary>
     /// Query to get a list of items

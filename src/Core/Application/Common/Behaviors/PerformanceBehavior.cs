@@ -1,9 +1,9 @@
 using System.Diagnostics;
-using AlloVoisinClone.Application.Common.Interfaces;
+using Mriguel.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace AlloVoisinClone.Application.Common.Behaviors
+namespace Mriguel.Application.Common.Behaviors
 {
     /// <summary>
     /// Pipeline behavior for measuring request performance
